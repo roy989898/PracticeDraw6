@@ -1,5 +1,6 @@
 package com.hencoder.hencoderpracticedraw6.practice;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Outline;
 import android.graphics.Path;
@@ -9,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewOutlineProvider;
+import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,6 +23,8 @@ import static com.hencoder.hencoderpracticedraw6.Utils.dpToPixel;
 public class Practice01Translation extends RelativeLayout {
     Button animateBt;
     ImageView imageView;
+    int animCount = 0;
+    private boolean isStartedAnimation;
 
     public Practice01Translation(Context context) {
         super(context);
@@ -49,8 +53,63 @@ public class Practice01Translation extends RelativeLayout {
             @Override
             public void onClick(final View v) {
                 // TODO 在这里处理点击事件，通过 View.animate().translationX/Y/Z() 来让 View 平移
+                if (!isStartedAnimation) {
+
+                    ViewPropertyAnimator anim = imageView.animate()
+
+                            .setListener(new Animator.AnimatorListener() {
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+                                    isStartedAnimation = true;
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    isStartedAnimation = false;
+                                    animCount = animCount + 1;
+                                    if (animCount >= 4) {
+                                        animCount = 0;
+                                    }
+
+                                }
+
+                                @Override
+                                public void onAnimationCancel(Animator animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animator animation) {
+
+                                }
+                            });
+
+                    switch (animCount) {
+                        case 0:
+                            anim.translationX(100);
+                            break;
+                        case 1:
+                            anim.translationY(100);
+                            break;
+                        case 2:
+                            anim.translationZ(100);
+                            break;
+                        case 3:
+
+                            anim.translationZ(-100)
+                                    .translationX(-100)
+                                    .translationY(-100);
+
+
+                            break;
+                    }
+
+                }
+
             }
         });
+
+
     }
 
     /**

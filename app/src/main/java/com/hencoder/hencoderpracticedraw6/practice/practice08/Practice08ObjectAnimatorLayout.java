@@ -1,5 +1,6 @@
 package com.hencoder.hencoderpracticedraw6.practice.practice08;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -36,7 +37,10 @@ public class Practice08ObjectAnimatorLayout extends RelativeLayout {
             public void onClick(View v) {
                 // TODO 在这里处理点击事件，用 ObjectAnimator 播放动画
                 // 1. 用 ObjectAnimator 创建 Animator 对象
+                ObjectAnimator anim = ObjectAnimator.ofFloat(view, "progress", 78);
+                anim.setDuration(1000);
                 // 2. 用 start() 执行动画
+                anim.start();
                 // *. 记得在 Practice08ObjectAnimatorView 中为 progress 添加 setter/ getter 方法！
             }
         });
